@@ -10,7 +10,7 @@ You need a [Slack webhook](https://api.slack.com/messaging/webhooks) URL to pass
 ...
 
 module "ecs_notifications" {
-    source            = "git::https://github.com/katunch/tf_aws_ecs_slack_notifications?ref=v1.0.0
+    source            = "git::https://github.com/katunch/tf_aws_ecs_slack_notifications?ref=v1.0.0"
     slack_webhook_url = "https://webhooks.slack.com/...."
 }
 ...
