@@ -7,9 +7,16 @@ terraform {
   }
 }
 
+data "aws_caller_identity" "current" {}
+
 # SNS Topic
 resource "aws_sns_topic" "ecs_events" {
-  name = "ecs-events"
+  name   = "ecs-events"
+  policy = templatefile("${path.module}/sns_policy.json", {
+    region     = data.aws_caller_identity.current.region
+    accountId  = data.aws_caller_identity.current.account_id
+    topic_name = "ecs-events"
+  })
 }
 
 # Lambda Function
@@ -42,7 +49,7 @@ resource "aws_cloudwatch_event_rule" "this" {
   description = "Capture ECS events"
 
   event_pattern = jsonencode({
-    source      = ["aws.ecs"]
+    source = ["aws.ecs"]
   })
 }
 
