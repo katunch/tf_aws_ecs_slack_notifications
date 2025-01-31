@@ -16,7 +16,7 @@ resource "aws_sns_topic" "ecs_events" {
   policy = templatefile("${path.module}/sns_policy.json", {
     region     = data.aws_region.current.name
     accountId  = data.aws_caller_identity.current.account_id
-    topic_name = "ecs-events"
+    topicName = "ecs-events"
   })
 }
 
