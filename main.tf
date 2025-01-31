@@ -8,12 +8,13 @@ terraform {
 }
 
 data "aws_caller_identity" "current" {}
+data "aws_region" "current" {}
 
 # SNS Topic
 resource "aws_sns_topic" "ecs_events" {
   name   = "ecs-events"
   policy = templatefile("${path.module}/sns_policy.json", {
-    region     = data.aws_caller_identity.current.region
+    region     = data.aws_region.current.name
     accountId  = data.aws_caller_identity.current.account_id
     topic_name = "ecs-events"
   })
